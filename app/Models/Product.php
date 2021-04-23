@@ -22,7 +22,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'brand_id', 'sku', 'name', 'slug', 'description', 'quantity',
+        'parent_id','brand_id', 'sku', 'name', 'slug', 'description', 'quantity',
         'weight', 'price', 'sale_price', 'status', 'featured',
     ];
 
@@ -44,6 +44,11 @@ class Product extends Model
         $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
+
+    public function productInventory()
+	{
+		return $this->hasOne('App\Models\ProductInventory');
+	}
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -153,5 +158,41 @@ class Product extends Model
 	{
 		return ($this->variants->count() > 0) ? $this->variants->first()->price : $this->price;
 	}
+	/**
+	 * Define relationship with the OrderItem
+	 *
+	 * @return void
+	 */
+	public function orderItems()
+	{
+		return $this->hasMany('App\Models\OrderItem');
+	}
+    	/**
+	 * Scope popular products
+	 *
+	 * @param Eloquent $query query builder
+	 * @param int      $limit limit
+	 *
+	 * @return Eloquent
+	 */
+	public function scopePopular($query, $limit = 10)
+	{
+		$month = now()->format('m');
+
+		return $query->selectRaw('products.*, COUNT(order_items.id) as total_sold')
+			->join('order_items', 'order_items.product_id', '=', 'products.id')
+			->join('orders', 'order_items.order_id', '=', 'orders.id')
+			->whereRaw(
+				'orders.status = :order_satus AND MONTH(orders.order_date) = :month',
+				[
+					'order_status' => Order::COMPLETED,
+					'month' => $month
+				]
+			)
+			->groupBy('products.id')
+			->orderByRaw('total_sold DESC')
+			->limit($limit);
+	}
+   
 }
 

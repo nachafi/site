@@ -1,3 +1,32 @@
+<style>
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu  a::after {
+  transform: rotate(-90deg);
+  position: absolute;
+  right: 6px;
+  top: .8em;
+   
+  
+}
+
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-left: .1rem;
+  margin-right: .1rem;
+}
+
+
+
+   
+
+}
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_nav"
@@ -15,11 +44,18 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="{{ route('category.show', $category->slug) }}" id="{{ $category->slug }}"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ $category->name }}</a>
-                                <div class="dropdown-menu" aria-labelledby="{{ $category->slug }}">
-                                    @foreach($category->items as $item)
-                                        <a class="dropdown-item" href="{{ route('category.show', $item->slug) }}">{{ $item->name }}</a>
-                                    @endforeach
-                                </div>
+                                <ul class="dropdown-menu" aria-labelledby="{{ $category->slug }}">
+                                
+                        <li class=" dropdown-submenu">
+                          
+                        
+                                @if(count($category->children))
+                                
+                                 @include('site.partials.navb',['childrens' => $category->children])
+                            @endif 
+                        
+                            </li> 
+                                </ul>
                             </li>
                         @else
                             <li class="nav-item">
@@ -36,3 +72,26 @@
         </div>
     </div>
 </nav>
+
+@push('scripts')
+
+
+<script>
+
+$('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+  if (!$(this).next().hasClass('show')) {
+    $(this).parents('.dropdown-menu').first().find('.show').removeClass('show');
+  }
+  var $subMenu = $(this).next('.dropdown-menu');
+  $subMenu.toggleClass('show');
+
+
+  $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+    $('.dropdown-submenu .show').removeClass('show');
+  });
+
+
+  return false;
+});
+</script>
+@endpush

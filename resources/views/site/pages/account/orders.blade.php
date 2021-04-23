@@ -50,6 +50,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div>
+                    <br> Shipped by: {{ $order->shipping_service_name }}
+                    </div>
                 </main>
             </div>
         </div>

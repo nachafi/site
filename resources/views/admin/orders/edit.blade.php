@@ -11,8 +11,9 @@
         <div class="col-md-8 mx-auto">
             <div class="tile">
                 <h3 class="tile-title">{{ $subTitle }}</h3>
-                <form action="{{ route('admin.orders.update') }}" method="POST" role="form" enctype="multipart/form-data">
+                <form action="{{ route('admin.orders.update', ['order' => $order->order_number]) }}" method="POST" role="form" enctype="multipart/form-data">
                     @csrf
+                    @method("Put")
                     <div class="tile-body">
                         <div class="form-group">
              <input type="hidden" name="id" value="{{$order->id}}" />

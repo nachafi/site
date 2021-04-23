@@ -30,8 +30,18 @@
                                 <td>{{ $brand->slug }}</td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group" aria-label="Second group">
-                                        <a href="{{ route('admin.brands.edit', $brand->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ route('admin.brands.edit', ['brand' => $brand->id]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                                         <a href="{{ route('admin.brands.delete', $brand->id) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        <form id="{{ $brand->id }}" action="{{ route('admin.brands.delete', ['brand' => $brand->id]) }}" method="POST">
+                       @csrf
+
+                       @method('DELETE')
+
+                       <button   onclick="event.preventDefault();
+                                       if(confirm('Do you really want to delete the brand {{ $brand->id  }} ?'))
+                                        document.getElementById({{ $brand->id }}).submit();
+                                    " type="submit">Delete</button>
+                    </form>
                                     </div>
                                 </td>
                             </tr>

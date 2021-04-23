@@ -108,7 +108,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label" for="special_price">Sale Price</label>
+                                            <label class="control-label" for="sale_price">Sale Price</label>
                                             <input
                                                 class="form-control"
                                                 type="text"

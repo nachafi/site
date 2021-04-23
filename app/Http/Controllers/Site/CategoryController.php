@@ -41,11 +41,11 @@ class CategoryController extends Controller
     {    
        
         $category = $this->categoryRepository->findBySlug($slug);
-        
+        $childrens = Category::where('parent_id',0)->get();
         
 
       
-        return view('site.pages.category', compact('category'));
+        return view('site.pages.category', compact('category','childrens'));
     }
 }
 

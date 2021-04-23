@@ -13,7 +13,7 @@ interface OrderContract
      */
     public function findOrderById(int $id);
 
-    public function findOrderByNumber($orderNumber);
+    public function findOrderByCode($orderCode);
        /**
      * @param array $params
      * @return mixed
@@ -24,6 +24,6 @@ interface OrderContract
      * @param $id
      * @return bool
      */
-    public function deleteOrder($orderNumber);
+    public function deleteOrder($orderCode);
 }
 

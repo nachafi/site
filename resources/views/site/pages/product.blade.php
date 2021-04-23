@@ -5,6 +5,37 @@
 
 <style>
 
+.product-tab {
+    border-bottom: 1px solid #ddd;
+    list-style: outside none none;
+    margin: 0 0 30px;
+    padding: 0;
+    text-align: center;
+}
+.product-tab li.active {
+    background: none repeat scroll 0 0 #5a88ca;
+}
+.product-tab li.active a {
+    color: #fff;
+}
+.product-tab li {
+    display: inline-block;
+}
+.product-tab li a {
+    color: #222;
+    display: block;
+    font-size: 16px;
+    padding: 10px 30px;
+}
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
     .display-comment .display-comment {
         margin-left: 40px
     }
@@ -81,13 +112,16 @@ label.star:before {
                             <aside class="col-sm-5 border-right">
                                 <article class="gallery-wrap">
                                 
+            
                                     @if ($product->images->count() > 0)
+                                    
                                         <div class="img-big-wrap">
                                         
                                             <div class="padding-y">
-                                               
-                                                <a href="{{ asset('storage/'.$product->images->first()->full) }}" data-fancybox="">
-                                                    <img src="{{ asset('storage/'.$product->images->first()->full) }}" alt="">
+                                            
+                                                <a href="{{ asset('storage/'.$product->images->first()->full) }}" data-fancybox=""   data-caption="{{$product->name}}" > 
+                                                
+                                                    <img class="mainImage" src="{{ asset('storage/'.$product->images->first()->full) }}" alt="" id="mainImage" >
                                                 </a>
                                                
                                             </div>
@@ -100,10 +134,15 @@ label.star:before {
                                         </div>
                                     @endif
                                      @if ($product->images->count() > 0)
+                                     
                                         <div class="img-small-wrap">
+                                        
                                             @foreach($product->images as $image)
-                                                <div class="item-gallery">
-                                                    <img src="{{ asset('storage/'.$image->full) }}" alt="">
+                                            
+                                                <div class="item-gallery" >
+                                                
+                                                <a href="{{ asset('storage/'.$image->full) }}"  data-fancybox="gallery"  data-caption="{{$product->name}}">
+                                                    <img class="changeImage" src="{{ asset('storage/'.$image->full) }}" alt="">
                                                 </div>
                                             @endforeach
                                         </div>
@@ -272,15 +311,23 @@ label.star:before {
 		<div class="container">
 			<div class="product-description-review text-center">
 				<div class="description-review-title nav" role=tablist>
+
 					<a class="active" href="#pro-dec" data-toggle="tab" role="tab" aria-selected="true">
 						Description
 					</a>
+                  
 					<a href="#pro-review" data-toggle="tab" role="tab" aria-selected="false">
 						Reviews (0)
 					</a>
+                    <ul class="product-tab" role="tablist">
+                                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Description</a></li>
+                                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Reviews</a></li>
+                                        </ul>
 				</div>
+                </div>
+                </div>
 				<div class="description-review-text tab-content">
-					<div class="tab-pane active show fade" id="pro-dec" role="tabpanel">
+					<div class="tab-pane active show fade" id="home" role="tabpanel">
                     <div class="col-md-12">
                     <article class="card mt-4">
                         <div class="card-body">
@@ -289,7 +336,7 @@ label.star:before {
                     </article>
                 </div>
 					</div>
-					<div class="tab-pane fade" id="pro-review" role="tabpanel">
+					<div class="tab-pane fade" id="profile" role="tabpanel">
 						<a href="#">Be the first to write your review!</a>
                         <div>
                         <h3>Leave a review</h3>
@@ -480,13 +527,26 @@ label.star:before {
             });
     
             $('.option').change(function () {
+                
                 $('#productPrice').html("{{ $product->sale_price != '' ? $product->sale_price : $product->price }}");
                 let extraPrice = $(this).find(':selected').data('price');
                 let price = parseFloat($('#productPrice').html());
                 let finalPrice = (Number(extraPrice) + price).toFixed(2);
                 $('#finalPrice').val(finalPrice);
                 $('#productPrice').html(finalPrice);
+    
+                alert(price); 
             });
+        });
+        
+        $(".changeImage").click(function(){
+            var image = $(this).attr('src');
+            $("#mainImage").attr("src",image);
+});
+
+  $(".fancybox").fancybox({
+            openEffect: "none",
+            closeEffect: "none"
         });
 
         $(document).on('click','#save',function(){
@@ -516,6 +576,9 @@ label.star:before {
             }
         }   
     });
+   
+    
+    
 });
     </script>
 @endpush

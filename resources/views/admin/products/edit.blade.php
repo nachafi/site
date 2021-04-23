@@ -24,8 +24,9 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="general">
                     <div class="tile">
-                        <form action="{{ route('admin.products.update') }}" method="POST" role="form">
+                        <form action="{{ route('admin.products.update', ['product' => $product->id]) }}" method="POST" role="form" enctype="multipart/form-data">
                             @csrf
+                            @method("Put")
                             <h3 class="tile-title">Product Information</h3>
                             <hr>
                             <div class="tile-body">
@@ -228,6 +229,16 @@
                                                     <a class="card-link float-right text-danger" href="{{ route('admin.products.images.delete', $image->id) }}">
                                                         <i class="fa fa-fw fa-lg fa-trash"></i>
                                                     </a>
+                                                    <form id="{{ $image->id }}"action="{{ route('admin.products.images.delete',  ['image' => $image->id]) }}" method="POST">
+                       @csrf
+
+                       @method('DELETE')
+
+                       <button   onclick="event.preventDefault();
+                                       if(confirm('Do you really want to delete the image {{ $image->id  }} ?'))
+                                        document.getElementById({{ $image->id }}).submit();
+                                    " type="submit">Delete</button>
+                    </form>
                                                 </div>
                                             </div>
                                         </div>

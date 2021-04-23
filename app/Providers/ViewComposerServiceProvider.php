@@ -10,6 +10,8 @@ use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\ProductAttribute;
 use App\Models\User;
+use App\Models\LikeDislike;
+use App\Models\Review;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -63,6 +65,12 @@ class ViewComposerServiceProvider extends ServiceProvider
         });
         View::composer('admin.dashboard.index', function ($view) {
             $view->with('userCount', User::count());
+        });
+        View::composer('admin.dashboard.index', function ($view) {
+            $view->with('likeCount', LikeDislike::count());
+        });
+        View::composer('admin.dashboard.index', function ($view) {
+            $view->with('reviewCount', Review::count());
         });
       
     

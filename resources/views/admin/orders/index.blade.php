@@ -27,7 +27,7 @@
                         <tbody>
                         @foreach($orders as $order)
                             <tr>
-                                <td>{{ $order->order_number }}</td>
+                                <td>{{ $order->code }}</td>
                                 <td>{{ $order->user->fullName }}</td>
                                 <td class="text-center">{{ config('settings.currency_symbol') }}{{ $order->grand_total }}</td>
                                 <td class="text-center">{{ $order->item_count }}</td>
@@ -53,9 +53,19 @@
                                 <td class="text-center">
                                     <div class="btn-group" role="group" aria-label="Second group">
                          
-                                        <a href="{{ route('admin.orders.show', $order->order_number) }}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
-                                        <a href="{{ route('admin.orders.edit', $order->order_number) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                        <a href="{{ route('admin.orders.delete', $order->order_number) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        <a href="{{ route('admin.orders.show', $order->code) }}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ route('admin.orders.edit', ['order' => $order->code]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ route('admin.orders.delete', $order->code) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        <form id="{{ $order->id }}" action="{{ route('admin.orders.delete',  ['order' => $order->id]) }}" method="POST">
+                       @csrf
+
+                       @method('DELETE')
+
+                       <button   onclick="event.preventDefault();
+                                       if(confirm('Do you really want to delete the order {{ $order->id }} ?'))
+                                        document.getElementById({{ $order->id }}).submit();
+                                    " type="submit">Delete</button>
+                    </form>
                                     </div>
                                 </td>
                             </tr>

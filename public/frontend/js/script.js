@@ -36,6 +36,7 @@ $(document).ready(function() {
 	if($("[data-fancybox]").length>0) {  // check if element exists
 		$("[data-fancybox]").fancybox();
 	} // end if
+    
 
 	//////////////////////// Bootstrap tooltip
 	if($('[data-toggle="tooltip"]').length>0) {  // check if element exists

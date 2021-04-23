@@ -11,8 +11,9 @@
         <div class="col-md-8 mx-auto">
             <div class="tile">
                 <h3 class="tile-title">{{ $subTitle }}</h3>
-                <form action="{{ route('admin.brands.update') }}" method="POST" role="form" enctype="multipart/form-data">
+                <form action="{{ route('admin.brands.update', ['brand' => $brand->id]) }}" method="POST" role="form" enctype="multipart/form-data">
                     @csrf
+                    @method("Put")
                     <div class="tile-body">
                         <div class="form-group">
                             <label class="control-label" for="name">Name <span class="m-l-5 text-danger"> *</span></label>

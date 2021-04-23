@@ -48,8 +48,18 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group" role="group" aria-label="Second group">
-                                            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                            <a href="{{ route('admin.products.edit', ['product' => $product->id]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ route('admin.products.delete', $product->id) }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                            <form id="{{ $product->id }}"action="{{ route('admin.products.delete',  ['product' => $product->id]) }}" method="POST">
+                       @csrf
+
+                       @method('DELETE')
+
+                       <button   onclick="event.preventDefault();
+                                       if(confirm('Do you really want to delete the product {{ $product->id  }} ?'))
+                                        document.getElementById({{ $product->id }}).submit();
+                                    " type="submit">Delete</button>
+                    </form>
                                         </div>
                                     </td>
                                 </tr>

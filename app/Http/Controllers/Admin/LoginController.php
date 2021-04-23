@@ -64,4 +64,5 @@ public function logout(Request $request)
     $request->session()->invalidate();
     return redirect()->route('admin.login');
 }
+
 }

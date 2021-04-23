@@ -13,6 +13,7 @@
                 <h3 class="tile-title">{{ $subTitle }}</h3>
                 <form action="{{ route('admin.categories.update') }}" method="POST" role="form" enctype="multipart/form-data">
                     @csrf
+                    @method("Put")
                     <div class="tile-body">
                         <div class="form-group">
                             <label class="control-label" for="name">Name <span class="m-l-5 text-danger"> *</span></label>

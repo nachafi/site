@@ -13,10 +13,11 @@
                 <section class="invoice">
                     <div class="row mb-4">
                         <div class="col-6">
-                            <h2 class="page-header"><i class="fa fa-globe"></i> {{ $order->order_number }}</h2>
+                            <h2 class="page-header"><i class="fa fa-globe"></i> {{ $order->code }}</h2>
                         </div>
                         <div class="col-6">
                             <h5 class="text-right">Date: {{ $order->created_at->toFormattedDateString() }}</h5>
+                            <br> <br> {{ $order->order_date }}
                         </div>
                     </div>
                     <div class="row invoice-info">
@@ -27,7 +28,7 @@
                             <address><strong>{{ $order->first_name }} {{ $order->last_name }}</strong><br>{{ $order->address }}<br>{{ $order->city }}, {{ $order->country }} {{ $order->post_code }}<br>{{ $order->phone_number }}<br></address>
                         </div>
                         <div class="col-4">
-                            <b>Order ID:</b> {{ $order->order_number }}<br>
+                            <b>Order ID:</b> {{ $order->code }}<br>
                             <b>Amount:</b> {{ config('settings.currency_symbol') }}{{ round($order->grand_total, 2) }}<br>
                             <b>Payment Method:</b> {{ $order->payment_method }}<br>
                             <b>Payment Status:</b> {{ $order->payment_status == 1 ? 'Completed' : 'Not Completed' }}<br>

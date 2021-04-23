@@ -20,8 +20,9 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="general">
                     <div class="tile">
-                        <form action="{{ route('admin.attributes.update') }}" method="POST" role="form">
+                        <form action="{{ route('admin.attributes.update', ['attribute' => $attribute->id]) }}" method="POST" role="form">
                             @csrf
+                            @method("Put")
                             <h3 class="tile-title">Attribute Information</h3>
                             <hr>
                             <div class="tile-body">

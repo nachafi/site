@@ -105,6 +105,13 @@
                             </article>
                         </div>
                     </div>
+                    <div class="different-address">
+							<div class="ship-different-title">
+								<h3>
+									<label>Ship to a different address?</label>
+									<input id="ship-box" type="checkbox" name="ship_to"/>
+								</h3>
+							</div>
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col-md-12">
@@ -117,6 +124,19 @@
                                             <dt>Total cost: </dt>
                                             <dd class="text-right h5 b"> {{ config('settings.currency_symbol') }}{{ \Cart::getSubTotal() }} </dd>
                                         </dl>
+                                        <tr class="cart-subtotal">
+										<th>Tax</th>
+										<td><span class="amount">{{ number_format(\Cart::getCondition('TAX 10%')->getCalculatedValue(\Cart::getSubTotal())) }}</span></td>
+									</tr>
+									<tr class="cart-subtotal">
+										<th>Shipping Cost ({{ $totalWeight }} kg)</th>
+										<td><select id="shipping-cost-option" required name="shipping_service"></select></td>
+									</tr>
+									<tr class="order-total">
+										<th>Order Total</th>
+										<td><strong><span class="total-amount">{{ number_format(\Cart::getTotal()) }}</span></strong>
+										</td>
+									</tr>		
                                     </article>
                                 </div>
                             </div>
